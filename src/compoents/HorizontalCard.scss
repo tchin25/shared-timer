@@ -13,9 +13,16 @@
 
         flex-basis: 4;
         padding: .5em;
+        margin-left: 2em;
 
-        &__title {}
+        &__title {
+            font-family: $font-montserrat;
+            font-size: 2em;
+        }
 
-        &__body {}
+        &__body {
+            font-family: $font-raleway;
+            font-size: 1em;
+        }
     }
 }
