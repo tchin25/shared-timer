@@ -1,0 +1,21 @@
+@use './_fonts.scss';
+
+.card {
+    display: flex;
+    flex-direction: row;
+
+    &__img {
+        flex-basis: 2;
+        padding: .5em;
+    }
+
+    .container {
+
+        flex-basis: 4;
+        padding: .5em;
+
+        &__title {}
+
+        &__body {}
+    }
+}
