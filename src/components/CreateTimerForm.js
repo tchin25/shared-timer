@@ -107,7 +107,7 @@ const CreateTimerForm = (props) => {
       </div>
       <div className="flex flex-col items-center mt-4">
       <button
-        class="bg-green-500 hover:bg-green-700 border-green-500 hover:border-green-700 border-4 text-white py-1 px-2 rounded shadow-sm"
+        class="w-full bg-green-500 hover:bg-green-700 border-green-500 hover:border-green-700 border-4 text-white py-1 px-2 rounded shadow-sm"
         type="button"
       >
         Create Timer
