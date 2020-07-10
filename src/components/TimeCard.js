@@ -12,7 +12,7 @@ const TimeCard = ({
 }) => {
   const currentTime = useContext(TimeContext);
   return (
-    <div className="flex sm:flex-row flex-col items-center px-2 py-2 rounded-lg shadow-md sm:justify-start justify-center text-center sm:text-left">
+    <div className="flex sm:flex-row flex-col items-center px-4 py-2 rounded-lg shadow-md sm:justify-start justify-center text-center sm:text-left">
       <Clock dueTime={dueTime} paused={true}></Clock>
       <div className="flex-grow sm:pl-8">
         <h2 className="title-font font-medium text-lg text-gray-900">
