@@ -11,10 +11,23 @@ const inputCss =
 const CreateTimerForm = (props) => {
   const timeContext = useContext(TimeContext);
 
+  const restrictNumberInput = (e) => {
+    e.persist();
+    let value = parseInt(e.target.value)
+    let max = parseInt(e.target.max)
+    let min = parseInt(e.target.min)
+    if (value < min) {
+      e.target.value = e.target.min;
+    } else if (value > max) {
+      e.target.value = e.target.max;
+    }
+    console.log(e);
+  };
+
   return (
     <form>
       <div>
-        <label className={`${labelCss}`} for="end-date">
+        <label className={`${labelCss}`} htmlFor="end-date">
           Set End Date
         </label>
         <input
@@ -26,19 +39,45 @@ const CreateTimerForm = (props) => {
         ></input>
       </div>
       <div>
-        <label className={`${labelCss}`} for="countdown">
-          Timer Length
+        <label className={`${labelCss}`} htmlFor="hours">
+          Hours
         </label>
         <input
           className={`${inputCss}`}
-          id="countdown"
-          type="time"
-          name="countdown"
-          step="1"
+          type="number"
+          id="hours"
+          name="hours"
+          min="0"
+          max="99"
+          onChange={restrictNumberInput}
+        ></input>
+        <label className={`${labelCss}`} htmlFor="minutes">
+          Minutes
+        </label>
+        <input
+          className={`${inputCss}`}
+          type="number"
+          id="minutes"
+          name="minutes"
+          min="0"
+          max="59"
+          onChange={restrictNumberInput}
+        ></input>
+        <label className={`${labelCss}`} htmlFor="seconds">
+          Seconds
+        </label>
+        <input
+          className={`${inputCss}`}
+          type="number"
+          id="seconds"
+          name="seconds"
+          min="0"
+          max="59"
+          onChange={restrictNumberInput}
         ></input>
       </div>
       <div className="">
-        <label className={`${labelCss}`} for="description">
+        <label className={`${labelCss}`} htmlFor="description">
           Description
         </label>
         <input
