@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import "./tailwind.output.css";
 import { TimeContext } from "./TimeContext";
-import { CurrentTimeContext } from "./CurrentTimeContext";
 import CreateTimerForm from "./components/CreateTimerForm"
 import TimeCard from "./components/TimeCard";
 import Clock from "./components/Clock";
