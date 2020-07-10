@@ -10,16 +10,16 @@ const TimeCard = ({
   description = "Test Description",
   ...props
 }) => {
-  const currentTime = useContext(TimeContext);
+  const timeContext = useContext(TimeContext);
   return (
-    <div className="flex sm:flex-row flex-col items-center px-4 py-2 rounded-lg shadow-md sm:justify-start justify-center text-center sm:text-left">
+    <div className="bg-gray-100 flex sm:flex-row flex-col items-center px-4 py-2 rounded-lg shadow-md sm:justify-start justify-center text-center sm:text-left">
       <Clock dueTime={dueTime} paused={true}></Clock>
       <div className="flex-grow sm:pl-8">
         <h2 className="title-font font-medium text-lg text-gray-900">
-          {dueTime.toString()}
+          {moment(dueTime).format("dddd, MMMM Do YYYY, h:mm:ss a")}
         </h2>
         <h3 className="text-gray-500 mb-3">
-          {moment(currentTime).to(dueTime)}
+          {moment(timeContext.currentTime).to(dueTime)}
         </h3>
         <p className="mb-4">{description}</p>
       </div>
