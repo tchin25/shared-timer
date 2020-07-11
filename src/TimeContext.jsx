@@ -5,10 +5,18 @@ import TimeContextReducer from "./TimeContextReducer";
 // Create Context Object
 export const TimeContext = createContext(-1);
 
+const testTimerObj = {
+  dueTime: moment(),
+  description: "Test Description From Context",
+  id: -1,
+};
+
 // Create a provider for components to consume and subscribe to changes
 export const TimeContextProvider = (props) => {
   const [currentTime, setCurrentTime] = useState();
-  const [timers, timersDispatch] = useReducer(TimeContextReducer, []);
+  const [timers, timersDispatch] = useReducer(TimeContextReducer, [
+    testTimerObj,
+  ]);
 
   useEffect(() => {
     const interval = setInterval(() => {

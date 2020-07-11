@@ -1,6 +1,7 @@
 import React, { useState, useContext, useRef } from "react";
 import firebase from '../firebase.js';
 import { TimeContext } from "../TimeContext";
+import moment from "moment";
 
 const labelCss =
   "block uppercase tracking-wide text-gray-700 text-xs font-bold mt-2";
@@ -18,6 +19,11 @@ const FetchTimerForm = () => {
     // await fetchTimer(passcode.current.value).catch((err) => {
     //     console.log('Error: ' + err)
     // })
+    timeContext.addTimer({
+        dueTime: moment(),
+        description: "Test Description from insert",
+        id: -2
+    })
     passcode.current.value = "";
   };
 

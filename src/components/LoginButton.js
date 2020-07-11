@@ -45,7 +45,7 @@ const LoginButton = () => {
       className="w-64 bg-green-500 hover:bg-green-700 border-green-500 hover:border-green-700 border-4 text-white py-1 px-2 rounded shadow-sm"
       onClick={login}
     >
-      Log in
+      Log in to create timers
     </button>
   );
 };

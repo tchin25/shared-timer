@@ -8,6 +8,7 @@ let borderCss = "";
 const TimeCard = ({
   dueTime = moment({ hour: 18, minute: 43, second: 0 }),
   description = "Test Description",
+  id = -1,
   ...props
 }) => {
   const timeContext = useContext(TimeContext);
