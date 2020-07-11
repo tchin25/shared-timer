@@ -17,10 +17,10 @@ export const TimeContextProvider = (props) => {
     return () => clearInterval(interval);
   }, []);
 
-  function addTimer(id) {
+  function addTimer(timerObj) {
     timersDispatch({
       type: "ADD_TIMER",
-      payload: id,
+      payload: timerObj,
     });
   }
 

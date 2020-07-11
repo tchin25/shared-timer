@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./tailwind.output.css";
 import { TimeContext } from "./TimeContext";
 import CreateTimerForm from "./components/CreateTimerForm"
+import FetchTimerForm from "./components/FetchTimerForm"
 import TimeCard from "./components/TimeCard";
 import Clock from "./components/Clock";
 import LoginButton from "./components/LoginButton"
@@ -23,7 +24,7 @@ function App() {
       </h2>
       <LoginButton></LoginButton>
       {user && <CreateTimerForm></CreateTimerForm>}
-      
+      <FetchTimerForm></FetchTimerForm>
       <span className="rounded-full w-64 h-1 bg-red-500 my-4"></span>
       <TimeCard></TimeCard>
     </div>
