@@ -15,7 +15,7 @@ function App() {
   const [user, loading, error] = useAuthState(firebase.auth());
 
   const timerList = timeContext.timers.map((timer) => (
-    <div className="my-2">
+    <div key={timer.id} className="my-2">
       <TimeCard {...timer}></TimeCard>
     </div>
   ));

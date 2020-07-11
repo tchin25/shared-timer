@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { TimeContext } from "./../TimeContext";
 import moment from "moment";
 
@@ -10,7 +10,8 @@ const inputCss =
 
 const CreateTimerForm = (props) => {
   const timeContext = useContext(TimeContext);
-  const [isSelectDate, setIsSelectDate] = useState(true);
+  const [isSelectDate, setIsSelectDate] = useState(false);
+  const form = useRef(null);
 
   const restrictNumberInput = (e) => {
     e.persist();
@@ -23,6 +24,17 @@ const CreateTimerForm = (props) => {
       e.target.value = e.target.max;
     }
     console.log(e);
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+    e.persist();
+    console.log(e);
+    if (form.current.checkValidity()) {
+      form.current.reset();
+    } else {
+      form.current.reportValidity();
+    }
   };
 
   const renderTimePicker = () => {
@@ -38,6 +50,7 @@ const CreateTimerForm = (props) => {
             type="datetime-local"
             name="end-date"
             min={moment(timeContext.currentTime).toISOString()}
+            required
           ></input>
         </div>
       );
@@ -55,7 +68,9 @@ const CreateTimerForm = (props) => {
               name="hours"
               min="0"
               max="99"
+              value="0"
               onChange={restrictNumberInput}
+              required
             ></input>
           </div>
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -69,7 +84,9 @@ const CreateTimerForm = (props) => {
               name="minutes"
               min="0"
               max="59"
+              value="0"
               onChange={restrictNumberInput}
+              required
             ></input>
           </div>
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -83,7 +100,9 @@ const CreateTimerForm = (props) => {
               name="seconds"
               min="0"
               max="59"
+              value="0"
               onChange={restrictNumberInput}
+              required
             ></input>
           </div>
         </div>
@@ -92,10 +111,13 @@ const CreateTimerForm = (props) => {
   };
 
   return (
-    <form>
+    <form ref={form}>
+      <p className={`title-font font-medium text-lg text-gray-900 mb-4`}>
+        Set End Time
+      </p>
       {renderTimePicker()}
       <div className="">
-        <label className={`${labelCss}`} htmlFor="description">
+        <label className={`${labelCss}`} required htmlFor="description">
           Description
         </label>
         <input
@@ -106,14 +128,15 @@ const CreateTimerForm = (props) => {
         ></input>
       </div>
       <div className="flex flex-col items-center mt-4">
-      <button
-        className="w-full bg-green-500 hover:bg-green-700 border-green-500 hover:border-green-700 border-4 text-white py-1 px-2 rounded shadow-sm"
-        type="button"
-      >
-        Create Timer
-      </button>
+        <button
+          className="w-full bg-green-500 hover:bg-green-700 border-green-500 hover:border-green-700 border-4 text-white py-1 px-2 rounded shadow-sm"
+          type="submit"
+          value="Submit"
+          onClick={submit}
+        >
+          Create Timer
+        </button>
       </div>
-
     </form>
   );
 };

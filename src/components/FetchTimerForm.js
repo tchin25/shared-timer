@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef } from "react";
-import firebase from '../firebase.js';
+import firebase from "../firebase.js";
 import { TimeContext } from "../TimeContext";
 import moment from "moment";
 
@@ -19,22 +19,25 @@ const FetchTimerForm = () => {
     // await fetchTimer(passcode.current.value).catch((err) => {
     //     console.log('Error: ' + err)
     // })
-    timeContext.addTimer({
+    if (passcode.current.checkValidity()) {
+      timeContext.addTimer({
         dueTime: moment(),
         description: "Test Description from insert",
-        id: -2
-    })
-    passcode.current.value = "";
+        id: -2,
+      });
+      passcode.current.reset();
+    } else {
+      passcode.current.reportValidity();
+    }
   };
 
   return (
-    <form>
+    <form ref={passcode}>
       <label className={`${labelCss}`} htmlFor="passcode">
         Timer Code
       </label>
       <div className="inline-flex">
         <input
-          ref={passcode}
           className={`${inputCss}`}
           id="passcode"
           type="text"
