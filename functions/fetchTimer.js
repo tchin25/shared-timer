@@ -1,9 +1,10 @@
 const functions = require("firebase-functions");
-const admin = require("./admin").initialize;
+const admin = require("./admin").initialize();
 
 // Fetches timer
 // If user is logged in, saves it to their account
 exports.fetchTimer = functions.https.onCall(async (data, context) => {
+  console.log(data);
   let timerDoc = admin.firestore().collection("timers").doc(data);
   return timerDoc
     .get()

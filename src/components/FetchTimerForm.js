@@ -12,7 +12,7 @@ const inputCss =
 const FetchTimerForm = () => {
   const passcode = useRef(null);
   const timeContext = useContext(TimeContext);
-  
+
   const onSubmit = async (e) => {
     // Save timer to user
     e.preventDefault();
@@ -22,7 +22,7 @@ const FetchTimerForm = () => {
       let timer = await fetchTimer(passcode.current.value).catch((err) => {
         console.log("Error: " + err);
       });
-      timeContext.addTimer(timer);
+      timeContext.addTimer(timer.data);
       passcode.current.reset();
     } else {
       passcode.current.reportValidity();

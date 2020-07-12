@@ -1,5 +1,5 @@
 const functions = require("firebase-functions");
-const admin = require("./admin").initialize;
+const admin = require("./admin").initialize();
 
 // Deletes timer from user document
 // Also checks if timer has any other users

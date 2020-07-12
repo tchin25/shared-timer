@@ -1,5 +1,5 @@
 const functions = require("firebase-functions");
-const admin = require("./admin").initialize;
+const admin = require("./admin").initialize();
 
 // Fetches all timers from account
 exports.fetchAllTimers = functions.https.onCall(async (data, context) => {
@@ -9,7 +9,9 @@ exports.fetchAllTimers = functions.https.onCall(async (data, context) => {
     return userDoc
       .get()
       .then(async (doc) => {
-        return doc.data().timers;
+        if (doc.exists) {
+          return doc.data().timers ? doc.data().timers : [];
+        }
       })
       .catch((err) => console.log(err));
   } else {

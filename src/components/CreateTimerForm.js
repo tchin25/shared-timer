@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import firebase from "../firebase.js";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { TimeContext } from "./../TimeContext";
@@ -19,6 +19,21 @@ const CreateTimerForm = (props) => {
   const minutes = useRef(null);
   const seconds = useRef(null);
   const description = useRef(null);
+
+  useEffect(() => {
+    const fillTimers = async () => {
+      let fetchAllTimers = firebase.functions().httpsCallable("fetchAllTimers");
+      let timers = await fetchAllTimers().catch((err) => {
+        console.log("Error: " + err);
+      });
+      console.log(timers);
+      timeContext.overwriteAllLocalTimers(timers.data);
+    };
+    fillTimers();
+    return () => {
+      timeContext.overwriteAllLocalTimers([]);
+    };
+  }, []);
 
   const toggleDatePicker = () => {
     setIsSelectDate(!isSelectDate);
@@ -60,10 +75,13 @@ const CreateTimerForm = (props) => {
         dueTime: toSet.valueOf(),
         description: description.current.value,
       };
-      let timerId = await saveTimer(toSave).catch((err) => {
-        console.log("Error: " + err);
-      });
-      timeContext.addTimer({ timerId, ...toSave });
+      let timerId = await saveTimer(toSave)
+        .then((data) => data.data)
+        .catch((err) => {
+          console.log("Error: " + err);
+        });
+      console.log(timerId);
+      timeContext.addTimer({ id: timerId, ...toSave });
       form.current.reset();
     } else {
       form.current.reportValidity();
