@@ -185,11 +185,16 @@ const CreateTimerForm = (props) => {
 
   return (
     <form ref={form} className={`mt-2`}>
-      <div className={`relative`}>
       <label className={`${labelCss}`} required htmlFor="select">
-          Timer Options
-        </label>
-        <select ref={picker} name="select" className={`${inputCss}`} onChange={setPicker}>
+        Timer Options
+      </label>
+      <div className={`relative`}>
+        <select
+          ref={picker}
+          name="select"
+          className={`${inputCss}`}
+          onChange={setPicker}
+        >
           <option value="duration">Set Duration</option>
           <option value="time">Set End Time</option>
         </select>
