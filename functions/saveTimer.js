@@ -9,13 +9,9 @@ exports.saveTimer = functions.https.onCall(async (data, context) => {
   if (context.auth) {
     let userId = context.auth.uid;
     let userDoc = admin.firestore().collection("users").doc(userId);
-    let timerId = await admin
-      .firestore()
-      .collection("timers")
-      .add({ subscribers: [userId], ...data })
-      .then((doc) => doc.id);
-    console.log(timerId);
-    let dataToSave = { id: timerId, ...data };
+    let timer = await admin.firestore().collection("timers").doc();
+    let dataToSave = { id: timer.id, ...data };
+    await timer.set({ subscribers: [userId], ...dataToSave });
     await userDoc
       .get()
       .then(async (doc) => {
@@ -30,7 +26,7 @@ exports.saveTimer = functions.https.onCall(async (data, context) => {
         }
       })
       .catch((err) => console.log(err));
-    return timerId;
+    return timer.id;
   } else {
     // Throwing an HttpsError so that the client gets the error details.
     throw new functions.https.HttpsError(

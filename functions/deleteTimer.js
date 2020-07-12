@@ -19,14 +19,13 @@ exports.deleteTimer = functions.https.onCall(async (data, context) => {
           };
           await userDoc.update(dataToUpdate);
           let timerDoc = admin.firestore().collection("timers").doc(data);
-          timerDoc.get().then(async (timerDocData) => {
+          await timerDoc.get().then(async (timerDocData) => {
+            console.log("TimeDocData exists: " + timerDocData.exists)
             if (timerDocData.exists) {
               if (context.auth) {
                 // Delete user from timer
                 let userId = context.auth.uid;
                 let subscribersArray = timerDocData.data().subscribers;
-                console.log("Subscriber Array: " + subscribersArray);
-                console.log("User id: " + userId);
                 if (subscribersArray.indexOf(userId) !== -1) {
                   if (subscribersArray.length > 1) {
                     await timerDoc.update({
