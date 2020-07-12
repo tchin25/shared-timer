@@ -1,4 +1,5 @@
 import React, { useState, useContext, useRef } from "react";
+import firebase from "../firebase.js";
 import { TimeContext } from "./../TimeContext";
 import moment from "moment";
 
@@ -12,9 +13,11 @@ const CreateTimerForm = (props) => {
   const timeContext = useContext(TimeContext);
   const [isSelectDate, setIsSelectDate] = useState(false);
   const form = useRef(null);
+  const date = useRef(null);
   const hours = useRef(null);
   const minutes = useRef(null);
   const seconds = useRef(null);
+  const description = useRef(null);
 
   const toggleDatePicker = () => {
     setIsSelectDate(!isSelectDate);
@@ -33,12 +36,32 @@ const CreateTimerForm = (props) => {
     console.log(e);
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     e.persist();
     if (customTimeValidator() && form.current.checkValidity()) {
       console.log("Form Submitted");
       // Send to cloud functions and add to local timer list
+      if (isSelectDate) {
+        let toSet = moment(date.current.value);
+        console.log(toSet);
+      } else {
+        let toSet = moment().add({
+          hours: parseInt(hours.current.value),
+          minutes: parseInt(minutes.current.value),
+          seconds: parseInt(seconds.current.value),
+        });
+        console.log(toSet);
+      }
+      let saveTimer = firebase.functions().httpsCallable("saveTimer");
+      let toSave = {
+        dueTime: toSet.valueOf(),
+        description: description.current.value,
+      };
+      let timerId = await saveTimer(toSave).catch((err) => {
+        console.log("Error: " + err);
+      });
+      timeContext.addTimer({ timerId, ...toSave });
       form.current.reset();
     } else {
       form.current.reportValidity();
@@ -68,6 +91,7 @@ const CreateTimerForm = (props) => {
             Set End Date
           </label>
           <input
+            ref={date}
             className={`${inputCss}`}
             id="end-date"
             type="datetime-local"
@@ -144,6 +168,7 @@ const CreateTimerForm = (props) => {
           Description
         </label>
         <input
+          ref={description}
           className={`${inputCss}`}
           id="description"
           type="text"

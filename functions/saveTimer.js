@@ -26,6 +26,7 @@ exports.saveTimer = functions.https.onCall(async (data, context) => {
             timers: [dataToSave],
           });
         }
+        return timerId;
       })
       .catch((err) => console.log(err));
   } else {

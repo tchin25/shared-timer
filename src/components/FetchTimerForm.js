@@ -12,19 +12,18 @@ const inputCss =
 const FetchTimerForm = () => {
   const passcode = useRef(null);
   const timeContext = useContext(TimeContext);
+  const [user, loading, error] = useAuthState(firebase.auth());
 
   const onSubmit = async (e) => {
+    // Save timer to user
     e.preventDefault();
-    // let fetchTimer = firebase.functions().httpsCallable('fetchTimer');
-    // await fetchTimer(passcode.current.value).catch((err) => {
-    //     console.log('Error: ' + err)
-    // })
+
     if (passcode.current.checkValidity()) {
-      timeContext.addTimer({
-        dueTime: moment(),
-        description: "Test Description from insert",
-        id: -2,
+      let fetchTimer = firebase.functions().httpsCallable("fetchTimer");
+      let timer = await fetchTimer(passcode.current.value).catch((err) => {
+        console.log("Error: " + err);
       });
+      timeContext.addTimer(timer);
       passcode.current.reset();
     } else {
       passcode.current.reportValidity();
