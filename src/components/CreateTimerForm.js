@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import firebase from "../firebase.js";
 import { TimeContext } from "./../TimeContext";
 import moment from "moment";
+import Icon from "@mdi/react";
+import { mdiChevronDown } from "@mdi/js";
 
 const labelCss =
   "block uppercase tracking-wide text-gray-700 text-xs font-bold mt-2";
@@ -18,6 +20,7 @@ const CreateTimerForm = (props) => {
   const minutes = useRef(null);
   const seconds = useRef(null);
   const description = useRef(null);
+  const picker = useRef(null);
 
   useEffect(() => {
     const fillTimers = async () => {
@@ -34,8 +37,12 @@ const CreateTimerForm = (props) => {
     };
   }, []);
 
-  const toggleDatePicker = () => {
-    setIsSelectDate(!isSelectDate);
+  const setPicker = () => {
+    if (picker.current.value === "time") {
+      setIsSelectDate(true);
+    } else {
+      setIsSelectDate(false);
+    }
   };
 
   const restrictNumberInput = (e) => {
@@ -178,9 +185,21 @@ const CreateTimerForm = (props) => {
 
   return (
     <form ref={form} className={`mt-2`}>
-      <p className={`title-font font-medium text-lg text-gray-900 text-center`}>
-        Set End Time
-      </p>
+      <div className={`relative`}>
+      <label className={`${labelCss}`} required htmlFor="select">
+          Timer Options
+        </label>
+        <select ref={picker} name="select" className={`${inputCss}`} onChange={setPicker}>
+          <option value="duration">Set Duration</option>
+          <option value="time">Set End Time</option>
+        </select>
+        <div
+          className={`absolute flex items-center inset-y-0 right-0 pr-2 text-gray-700`}
+        >
+          <Icon path={mdiChevronDown} size={1}></Icon>
+        </div>
+      </div>
+
       {renderTimePicker()}
       <div className="">
         <label className={`${labelCss}`} required htmlFor="description">
@@ -190,6 +209,7 @@ const CreateTimerForm = (props) => {
           ref={description}
           className={`${inputCss}`}
           id="description"
+          name="description"
           type="text"
           placeholder="Description"
         ></input>

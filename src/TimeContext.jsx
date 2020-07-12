@@ -14,9 +14,7 @@ const testTimerObj = {
 // Create a provider for components to consume and subscribe to changes
 export const TimeContextProvider = (props) => {
   const [currentTime, setCurrentTime] = useState();
-  const [timers, timersDispatch] = useReducer(TimeContextReducer, [
-    testTimerObj,
-  ]);
+  const [timers, timersDispatch] = useReducer(TimeContextReducer, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -48,7 +46,13 @@ export const TimeContextProvider = (props) => {
 
   return (
     <TimeContext.Provider
-      value={{ currentTime, timers, addTimer, overwriteAllLocalTimers, deleteTimer }}
+      value={{
+        currentTime,
+        timers,
+        addTimer,
+        overwriteAllLocalTimers,
+        deleteTimer,
+      }}
     >
       {props.children}
     </TimeContext.Provider>
