@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import firebase from "../firebase.js";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { TimeContext } from "./../TimeContext";
 import moment from "moment";
 

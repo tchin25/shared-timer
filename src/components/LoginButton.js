@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import firebase from "../firebase.js";
-import { TimeContext } from "../TimeContext";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const login = () => {
@@ -13,7 +12,6 @@ const logout = () => {
 
 const LoginButton = () => {
   const [user, loading, error] = useAuthState(firebase.auth());
-  const timeContext = useContext(TimeContext);
 
   if (loading) {
     return (

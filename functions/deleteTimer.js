@@ -25,6 +25,8 @@ exports.deleteTimer = functions.https.onCall(async (data, context) => {
                 // Delete user from timer
                 let userId = context.auth.uid;
                 let subscribersArray = timerDocData.data().subscribers;
+                console.log("Subscriber Array: " + subscribersArray);
+                console.log("User id: " + userId);
                 if (subscribersArray.indexOf(userId) !== -1) {
                   if (subscribersArray.length > 1) {
                     await timerDoc.update({

@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import Clock from "./Clock";
 import moment from "moment";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { TimeContext } from "../TimeContext";
 import firebase from "../firebase.js";
+import Icon from "@mdi/react";
+import { mdiDelete, mdiDeleteEmpty } from "@mdi/js";
 
-let borderCss = "";
 
 const TimeCard = ({
   dueTime = moment({ hour: 18, minute: 43, second: 0 }),
@@ -14,7 +15,8 @@ const TimeCard = ({
   ...props
 }) => {
   const timeContext = useContext(TimeContext);
-  const [user, loading, error] = useAuthState(firebase.auth());
+  const [hover, setHover] = useState(false);
+  const [user] = useAuthState(firebase.auth());
 
   const deleteTimer = () => {
     if (user) {
@@ -27,7 +29,7 @@ const TimeCard = ({
   };
 
   return (
-    <div className="bg-gray-100 flex sm:flex-row flex-col items-center px-4 py-2 rounded-lg shadow-md sm:justify-start justify-center text-center sm:text-left">
+    <div className="relative bg-gray-100 flex sm:flex-row flex-col items-center px-4 py-2 rounded-lg shadow-md sm:justify-start justify-center text-center sm:text-left">
       <Clock dueTime={moment(dueTime)} paused={true}></Clock>
       <div className="flex-grow sm:pl-8">
         <h2 className="title-font font-medium text-lg text-gray-900">
@@ -39,6 +41,16 @@ const TimeCard = ({
         <p className="mb-4">{description}</p>
         <p className="mb-4">{id}</p>
       </div>
+      <button onClick={deleteTimer}>
+        <Icon
+          path={hover ? mdiDeleteEmpty : mdiDelete}
+          size={1}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+          title="Delete Timer"
+          className={`hover:text-red-700 text-red-500 absolute right-0 bottom-0 mb-2 mr-2 cursor-pointer`}
+        ></Icon>
+      </button>
     </div>
   );
 };

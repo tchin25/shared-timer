@@ -1,7 +1,6 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useContext, useRef } from "react";
 import firebase from "../firebase.js";
 import { TimeContext } from "../TimeContext";
-import moment from "moment";
 
 const labelCss =
   "block uppercase tracking-wide text-gray-700 text-xs font-bold mt-2";

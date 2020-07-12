@@ -12,7 +12,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 function App() {
   const timeContext = useContext(TimeContext);
-  const [user, loading, error] = useAuthState(firebase.auth());
+  const [user] = useAuthState(firebase.auth());
 
   const timerList = timeContext.timers.map((timer) => (
     <div key={timer.id} className="my-2">

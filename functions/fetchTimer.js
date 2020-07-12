@@ -25,11 +25,11 @@ exports.fetchTimer = functions.https.onCall(async (data, context) => {
                 // Adds timer to user
                 if (userDocData.exists) {
                   await userDoc.update({
-                    timers: [timerDocData, ...userDocData.data().timers],
+                    timers: [timerDocData.data(), ...userDocData.data().timers],
                   });
                 } else {
                   await userDoc.set({
-                    timers: [timerDocData],
+                    timers: [timerDocData.data()],
                   });
                 }
               })
@@ -51,9 +51,6 @@ exports.fetchTimer = functions.https.onCall(async (data, context) => {
     })
     .catch((err) => {
       console.log(err);
-      throw new functions.https.HttpsError(
-        "not-found",
-        "The timer was not found."
-      );
+      return err;
     });
 });
