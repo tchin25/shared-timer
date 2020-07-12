@@ -16,14 +16,20 @@ const FetchTimerForm = () => {
   const onSubmit = async (e) => {
     // Save timer to user
     e.preventDefault();
+    passcode.current.setCustomValidity("");
 
     if (form.current.checkValidity()) {
       let fetchTimer = firebase.functions().httpsCallable("fetchTimer");
       let timer = await fetchTimer(passcode.current.value).catch((err) => {
         console.log("Error: " + err);
+        form.current.reset();
+        passcode.current.setCustomValidity(err);
+        form.current.reportValidity();
       });
-      timeContext.addTimer(timer.data);
-      form.current.reset();
+      if (timer) {
+        timeContext.addTimer(timer.data);
+        form.current.reset();
+      }
     } else {
       form.current.reportValidity();
     }

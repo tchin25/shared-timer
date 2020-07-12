@@ -48,9 +48,5 @@ exports.fetchTimer = functions.https.onCall(async (data, context) => {
           "The timer was not found."
         );
       }
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
     });
 });
