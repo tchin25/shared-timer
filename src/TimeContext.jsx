@@ -32,6 +32,13 @@ export const TimeContextProvider = (props) => {
     });
   }
 
+  function overwriteAllLocalTimers(timersObj) {
+    timersDispatch({
+      type: "OVERWRITE_ALL_LOCAL_TIMERS",
+      payload: timersObj,
+    });
+  }
+
   function deleteTimer(id) {
     timersDispatch({
       type: "DELETE_TIMER",
@@ -41,7 +48,7 @@ export const TimeContextProvider = (props) => {
 
   return (
     <TimeContext.Provider
-      value={{ currentTime, timers, addTimer, deleteTimer }}
+      value={{ currentTime, timers, addTimer, overwriteAllLocalTimers, deleteTimer }}
     >
       {props.children}
     </TimeContext.Provider>
