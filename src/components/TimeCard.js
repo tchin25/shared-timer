@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import Clock from "./Clock";
 import moment from "moment";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { TimeContext } from "../TimeContext";
+import firebase from "../firebase.js";
 
 let borderCss = "";
 
@@ -12,6 +14,18 @@ const TimeCard = ({
   ...props
 }) => {
   const timeContext = useContext(TimeContext);
+  const [user, loading, error] = useAuthState(firebase.auth());
+
+  const deleteTimer = () => {
+    if (user) {
+      let deleteTimerFunc = firebase.functions().httpsCallable("deleteTimer");
+      deleteTimerFunc(id).catch((err) => {
+        console.log("Error: " + err);
+      });
+    }
+    timeContext.deleteTimer(id);
+  };
+
   return (
     <div className="bg-gray-100 flex sm:flex-row flex-col items-center px-4 py-2 rounded-lg shadow-md sm:justify-start justify-center text-center sm:text-left">
       <Clock dueTime={moment(dueTime)} paused={true}></Clock>

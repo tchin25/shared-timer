@@ -11,31 +11,33 @@ const inputCss =
 
 const FetchTimerForm = () => {
   const passcode = useRef(null);
+  const form = useRef(null);
   const timeContext = useContext(TimeContext);
 
   const onSubmit = async (e) => {
     // Save timer to user
     e.preventDefault();
 
-    if (passcode.current.checkValidity()) {
+    if (form.current.checkValidity()) {
       let fetchTimer = firebase.functions().httpsCallable("fetchTimer");
       let timer = await fetchTimer(passcode.current.value).catch((err) => {
         console.log("Error: " + err);
       });
       timeContext.addTimer(timer.data);
-      passcode.current.reset();
+      form.current.reset();
     } else {
-      passcode.current.reportValidity();
+      form.current.reportValidity();
     }
   };
 
   return (
-    <form ref={passcode}>
+    <form ref={form}>
       <label className={`${labelCss}`} htmlFor="passcode">
         Timer Code
       </label>
       <div className="inline-flex">
         <input
+          ref={passcode}
           className={`${inputCss}`}
           id="passcode"
           type="text"

@@ -1,7 +1,12 @@
 export default (state, action) => {
   switch (action.type) {
     case "ADD_TIMER":
-      return [action.payload, ...state];
+      const found = state.some((timer) => timer.id === action.payload.id);
+      if (!found) {
+        return [action.payload, ...state];
+      }
+      console.log("Timer already loaded");
+      return state;
     case "OVERWRITE_ALL_LOCAL_TIMERS":
       if (action.payload) {
         return [...action.payload];
