@@ -12,8 +12,7 @@ const inputCss =
 const FetchTimerForm = () => {
   const passcode = useRef(null);
   const timeContext = useContext(TimeContext);
-  const [user, loading, error] = useAuthState(firebase.auth());
-
+  
   const onSubmit = async (e) => {
     // Save timer to user
     e.preventDefault();

@@ -23,6 +23,7 @@ const TimeCard = ({
           {moment(timeContext.currentTime).to(dueTime)}
         </h3>
         <p className="mb-4">{description}</p>
+        <p className="mb-4">{id}</p>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
-import React from "react";
-import firebase from '../firebase.js';
+import React, { useContext } from "react";
+import firebase from "../firebase.js";
 import { TimeContext } from "../TimeContext";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -14,6 +14,15 @@ const logout = () => {
 const LoginButton = () => {
   const [user, loading, error] = useAuthState(firebase.auth());
   const timeContext = useContext(TimeContext);
+
+  const loadTimers = async () => {
+    let fetchAllTimers = firebase.functions().httpsCallable("fetchAllTimers");
+    let timers = await fetchAllTimers().catch((err) => {
+      console.log("Error: " + err);
+    });
+    console.log(timers);
+    timeContext.overwriteAllLocalTimers(timers);
+  };
 
   if (loading) {
     return (
@@ -30,11 +39,7 @@ const LoginButton = () => {
     );
   }
   if (user) {
-    let fetchAllTimers = firebase.functions().httpsCallable("fetchAllTimers");
-    let timers = await fetchAllTimers().catch((err) => {
-      console.log("Error: " + err);
-    });
-    timeContext.overwriteAllLocalTimers(timers);
+    loadTimers();
     return (
       <div>
         <p>Current User: {user.email}</p>

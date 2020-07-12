@@ -1,5 +1,6 @@
 import React, { useState, useContext, useRef } from "react";
 import firebase from "../firebase.js";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { TimeContext } from "./../TimeContext";
 import moment from "moment";
 
@@ -41,12 +42,13 @@ const CreateTimerForm = (props) => {
     e.persist();
     if (customTimeValidator() && form.current.checkValidity()) {
       console.log("Form Submitted");
+      let toSet;
       // Send to cloud functions and add to local timer list
       if (isSelectDate) {
-        let toSet = moment(date.current.value);
+        toSet = moment(date.current.value);
         console.log(toSet);
       } else {
-        let toSet = moment().add({
+        toSet = moment().add({
           hours: parseInt(hours.current.value),
           minutes: parseInt(minutes.current.value),
           seconds: parseInt(seconds.current.value),

@@ -2,7 +2,7 @@ const functions = require("firebase-functions");
 const admin = require("./admin").initialize;
 
 // Fetches all timers from account
-exports.fetchTimer = functions.https.onCall(async (data, context) => {
+exports.fetchAllTimers = functions.https.onCall(async (data, context) => {
   if (context.auth) {
     let userId = context.auth.uid;
     let userDoc = admin.firestore().collection("users").doc(userId);
