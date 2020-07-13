@@ -6,13 +6,14 @@
 > - - Unfortunately, due to the way cloud functions work, cold start times will always be an issue until there's enough users that the functions are always running or until it's replaced with a node server 
 > - Also includes an example of a scheduled cloud function for database cleanup in `functions/scheduledCleanup.js`
 
-###*[Live Website Can Be Seen Here](https://sharedtimer.net)*
+*[Live Website Can Be Seen Here](https://sharedtimer.net)*
 
 ---
 
 | User View | Guest View |
 |:---------:|:----------:|
 |<img src="./usersc.png" width="300">|<img src="./guestsc.png" width="300">|
+
 *Screenshots subject to change as I actually try to make this site look pretty*
 
 ---
