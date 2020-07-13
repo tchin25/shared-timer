@@ -28,7 +28,6 @@ const CreateTimerForm = (props) => {
       let timers = await fetchAllTimers().catch((err) => {
         console.log("Error: " + err);
       });
-      console.log(timers);
       timeContext.overwriteAllLocalTimers(timers.data);
     };
     fillTimers();
@@ -62,7 +61,6 @@ const CreateTimerForm = (props) => {
     e.preventDefault();
     e.persist();
     if (customTimeValidator() && form.current.checkValidity()) {
-      console.log("Form Submitted");
       let toSet;
       // Send to cloud functions and add to local timer list
       if (isSelectDate) {
@@ -86,7 +84,6 @@ const CreateTimerForm = (props) => {
         .catch((err) => {
           console.log("Error: " + err);
         });
-      console.log(timerId);
       timeContext.addTimer({ id: timerId, ...toSave });
       form.current.reset();
     } else {
@@ -96,7 +93,6 @@ const CreateTimerForm = (props) => {
 
   const customTimeValidator = () => {
     if (isSelectDate) {
-      console.log(date.current.value);
       if (
         moment(date.current.value, moment.HTML5_FMT.DATETIME_LOCAL) > moment()
       ) {
@@ -137,7 +133,7 @@ const CreateTimerForm = (props) => {
     } else {
       return (
         <div className="flex flex-wrap">
-          <div className="w-full md:w-1/3 mb-6 md:pr-2 md:mb-0">
+          <div className="w-full md:w-1/3 md:pr-2 mb-0">
             <label className={`${labelCss}`} htmlFor="hours">
               Hours
             </label>
@@ -153,7 +149,7 @@ const CreateTimerForm = (props) => {
               onChange={restrictNumberInput}
             ></input>
           </div>
-          <div className="w-full md:w-1/3 mb-6 md:px-2 md:mb-0">
+          <div className="w-full md:w-1/3 md:px-2 mb-0">
             <label className={`${labelCss}`} htmlFor="minutes">
               Minutes
             </label>
@@ -169,7 +165,7 @@ const CreateTimerForm = (props) => {
               onChange={restrictNumberInput}
             ></input>
           </div>
-          <div className="w-full md:w-1/3 mb-6 md:pl-2 md:mb-0">
+          <div className="w-full md:w-1/3 md:pl-2 mb-0">
             <label className={`${labelCss}`} htmlFor="seconds">
               Seconds
             </label>

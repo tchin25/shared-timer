@@ -21,7 +21,7 @@ function App() {
   ));
 
   return (
-    <div className="h-screen m-auto container flex flex-col justify-start items-center">
+    <div className="m-auto container flex flex-col justify-center items-center">
       <div className="my-4">
         <Clock></Clock>
       </div>
