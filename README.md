@@ -38,7 +38,7 @@ $ npm install
 # (or just downgrade functions to target NodeJS 8 runtime in functions/package.json)
 
 # serve with hot reload at localhost:3000
-$ yarn dev
+$ yarn start
 
 # build for production and deploy
 $ yarn build && firebase deploy
