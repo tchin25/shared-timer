@@ -21,7 +21,7 @@ function App() {
   ));
 
   return (
-    <div className="m-auto container flex flex-col justify-center items-center">
+    <div className="m-auto container flex flex-col justify-center items-center" style={{maxWidth: "95vw"}}>
       <div className="my-4">
         <Clock></Clock>
       </div>

@@ -33,7 +33,7 @@ const TimeCard = ({
   return (
     <div className="relative bg-gray-100 flex sm:flex-row flex-col items-center px-4 py-2 rounded-lg shadow-md sm:justify-start justify-center text-center sm:text-left">
       <Clock dueTime={moment(dueTime)} paused={true}></Clock>
-      <div className="sm:pl-8" style={{width: "24rem"}}>
+      <div className="sm:pl-8" style={{width: "24rem", maxWidth: "90vw"}}>
         <h2 className="title-font font-medium text-lg text-gray-900">
           {moment(dueTime).format("dddd, MMMM Do YYYY, h:mm:ss a")}
         </h2>
