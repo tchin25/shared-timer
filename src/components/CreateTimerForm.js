@@ -96,7 +96,15 @@ const CreateTimerForm = (props) => {
 
   const customTimeValidator = () => {
     if (isSelectDate) {
-      return true;
+      console.log(date.current.value);
+      if (
+        moment(date.current.value, moment.HTML5_FMT.DATETIME_LOCAL) > moment()
+      ) {
+        date.current.setCustomValidity("");
+        return true;
+      }
+      date.current.setCustomValidity("Date Must Be In The Future");
+      return false;
     } else if (
       !parseInt(hours.current.value) &&
       !parseInt(minutes.current.value) &&
@@ -122,7 +130,6 @@ const CreateTimerForm = (props) => {
             id="end-date"
             type="datetime-local"
             name="end-date"
-            min={moment(timeContext.currentTime).toISOString()}
             required
           ></input>
         </div>
