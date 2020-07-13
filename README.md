@@ -1,68 +1,44 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Shared Timer
 
-## Available Scripts
+> - A Shared Timer built on React and Firebase
+> - Users can log in and create and save timers, and guests can input timer codes to fetch timers
+> - All backend interactions is done through cloud functions and the Firebase admin sdk
+> - - Unfortunately, due to the way cloud functions work, cold start times will always be an issue until there's enough users that the functions are always running or until it's replaced with a node server 
+> - Also includes an example of a scheduled cloud function for database cleanup in `functions/scheduledCleanup.js`
 
-In the project directory, you can run:
+###*[Live Website Can Be Seen Here](https://sharedtimer.net)*
 
-### `yarn start`
+---
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+| User View | Guest View |
+|:---------:|:----------:|
+|<img src="./usersc.png" width="300">|<img src="./guestsc.png" width="300">|
+*Screenshots subject to change as I actually try to make this site look pretty*
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+---
+## Build Setup
 
-### `yarn test`
+```bash
+# create Firebase project and initialize hosting, functions, and Firestore
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# install dependencies
+$ yarn install
 
-### `yarn build`
+# init Firebase with hosting from dist folder
+# (assuming you have Firebase SDK already set up)
+$ firebase init
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# install cloud functions dependencies
+$ cd functions
+$ npm install
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+# replace Firebase config in src/firebase.js with your own config
+# make sure your Firebase account is on the Blaze plan to enable cloud functions
+# (or just downgrade functions to target NodeJS 8 runtime in functions/package.json)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# serve with hot reload at localhost:3000
+$ yarn dev
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+# build for production and deploy
+$ yarn build && firebase deploy
+```
