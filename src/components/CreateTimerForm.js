@@ -14,6 +14,7 @@ const inputCss =
 const CreateTimerForm = (props) => {
   const timeContext = useContext(TimeContext);
   const [isSelectDate, setIsSelectDate] = useState(false);
+  const [loading, setLoading] = useState(false);
   const form = useRef(null);
   const date = useRef(null);
   const hours = useRef(null);
@@ -75,6 +76,7 @@ const CreateTimerForm = (props) => {
         console.log(toSet);
       }
       let saveTimer = firebase.functions().httpsCallable("saveTimer");
+      setLoading(true);
       let toSave = {
         dueTime: toSet.valueOf(),
         description: description.current.value,
@@ -86,6 +88,7 @@ const CreateTimerForm = (props) => {
         });
       timeContext.addTimer({ id: timerId, ...toSave });
       form.current.reset();
+      setLoading(false);
     } else {
       form.current.reportValidity();
     }
@@ -187,7 +190,7 @@ const CreateTimerForm = (props) => {
   };
 
   return (
-    <form ref={form} className={`mt-2`}>
+    <form ref={form} onSubmit={submit} className={`mt-2`}>
       <label className={`${labelCss}`} required htmlFor="select">
         Timer Options
       </label>
@@ -227,9 +230,9 @@ const CreateTimerForm = (props) => {
           className="w-full bg-green-500 hover:bg-green-700 border-green-500 hover:border-green-700 border-4 text-white py-1 px-2 rounded shadow-sm"
           type="submit"
           value="Submit"
-          onClick={submit}
+          disabled={loading}
         >
-          Create Timer
+          {loading ? "Submitting..." : "Create Timer"}
         </button>
       </div>
     </form>
