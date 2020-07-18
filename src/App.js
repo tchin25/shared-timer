@@ -27,7 +27,7 @@ function App() {
         <Clock></Clock>
       </div>
       <h2 className="title-font font-medium text-lg text-gray-900 mb-4">
-        {moment(timeContext.currentTime).format(
+        {moment().format(
           "dddd, MMMM Do YYYY, h:mm:ss a"
         )}
       </h2>
