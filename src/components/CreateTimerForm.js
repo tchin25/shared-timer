@@ -23,20 +23,6 @@ const CreateTimerForm = (props) => {
   const description = useRef(null);
   const picker = useRef(null);
 
-  useEffect(() => {
-    const fillTimers = async () => {
-      let fetchAllTimers = firebase.functions().httpsCallable("fetchAllTimers");
-      let timers = await fetchAllTimers().catch((err) => {
-        console.log("Error: " + err);
-      });
-      timeContext.overwriteAllLocalTimers(timers.data);
-    };
-    fillTimers();
-    return () => {
-      timeContext.overwriteAllLocalTimers([]);
-    };
-  }, []);
-
   const setPicker = () => {
     if (picker.current.value === "time") {
       setIsSelectDate(true);

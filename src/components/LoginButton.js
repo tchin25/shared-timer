@@ -1,17 +1,34 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import firebase from "../firebase.js";
 import { useAuthState } from "react-firebase-hooks/auth";
-
-const login = () => {
-  let provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider);
-};
-const logout = () => {
-  firebase.auth().signOut();
-};
+import { TimeContext } from "./../TimeContext";
 
 const LoginButton = () => {
   const [user, loading, error] = useAuthState(firebase.auth());
+  const timeContext = useContext(TimeContext);
+
+  const login = () => {
+    let provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider);
+  };
+
+  const logout = () => {
+    timeContext.overwriteAllLocalTimers([]);
+    firebase.auth().signOut();
+  };
+
+  useEffect(() => {
+    const fillTimers = async () => {
+      let fetchAllTimers = firebase.functions().httpsCallable("fetchAllTimers");
+      let timers = await fetchAllTimers().catch((err) => {
+        console.log("Error: " + err);
+      });
+      timeContext.overwriteAllLocalTimers(timers.data);
+    };
+    if (user) {
+      fillTimers();
+    }
+  }, [user]);
 
   if (loading) {
     return (
