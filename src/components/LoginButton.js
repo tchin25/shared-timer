@@ -17,19 +17,6 @@ const LoginButton = () => {
     firebase.auth().signOut();
   };
 
-  useEffect(() => {
-    const fillTimers = async () => {
-      let fetchAllTimers = firebase.functions().httpsCallable("fetchAllTimers");
-      let timers = await fetchAllTimers().catch((err) => {
-        console.log("Error: " + err);
-      });
-      timeContext.overwriteAllLocalTimers(timers.data);
-    };
-    if (user) {
-      fillTimers();
-    }
-  }, [user]);
-
   if (loading) {
     return (
       <div>
