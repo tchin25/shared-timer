@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import firebase from "../firebase.js";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { TimeContext } from "./../TimeContext";

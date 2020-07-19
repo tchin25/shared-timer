@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext, useRef } from "react";
 import firebase from "../firebase.js";
 import { TimeContext } from "./../TimeContext";
 import moment from "moment";

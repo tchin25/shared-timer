@@ -11,6 +11,7 @@ const DefaultFooter = () => {
             <img
               className="w-10 h-10 text-white p-px bg-white shadow-inner object-cover rounded-full"
               src="./santathomas.png"
+              alt="Creator" 
             ></img>
             <span className="ml-3 text-md">
               A side project created by{" "}
